@@ -103,4 +103,27 @@ class JobPostModel(models.Model):
     
     def __str__(self):
       return f'{self.title}'
+
+#ApplyJobModel
+
+
+class ApplyJobModel(models.Model):
+    # relation field
+    applied_by = models.ForeignKey(
+        SeekerProfileModel,
+        on_delete=models.CASCADE,
+        related_name='applied_by_info',
+        null=True
+    )
+    applied_job = models.ForeignKey(
+        JobPostModel,
+        on_delete=models.CASCADE,
+        related_name='applied_job_info',
+        null=True
+    )
+    resume = models.FileField(upload_to='seeker_resume', null=True)
+    applied_at = models.DateField(auto_now_add=True, null=True)
+    
+    def __str__(self):
+      return f'{self.applied_by.name}-{self.applied_job.title}'
     
